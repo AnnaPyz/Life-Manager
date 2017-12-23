@@ -1,0 +1,15 @@
+.body{
+    -fx-background-color: darkgreen;
+}
+.button{
+    -fx-background-color: green;
+    -fx-border-color: red;
+    -fx-text-fill: white;
+}
+.label{
+    -fx-text-fill: white;
+}
+#tableheader{
+    -fx-text-fill: darkgreen;	
+}
+
