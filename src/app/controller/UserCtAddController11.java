@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.time.Instant;
+import java.time.LocalDate;
+
 import app.database.DBConnector;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -54,12 +57,12 @@ public class UserCtAddController11 {
 	}
 
 	@FXML
-	void gobackAction(MouseEvent event) { // czemu nie dzia³a????????
+	void gobackAction(MouseEvent event) { 
 		Stage stage = new Stage();
 		Parent parent = null;
-		System.out.println("111");
+		//System.out.println("111"); TEST
 		try {
-			parent = (Parent) FXMLLoader.load(getClass().getResource("/app/view/UserView1.fxml")); // TU SIÊ WYKRZACZA !!!
+			parent = (Parent) FXMLLoader.load(getClass().getResource("/app/view/UserView1.fxml"));
 			Scene scene = new Scene(parent);
 			stage.setScene(scene);
 			stage.setTitle("User panel");
@@ -75,13 +78,13 @@ public class UserCtAddController11 {
 	@FXML
 	void submitAction(MouseEvent event) {
 		if (tf_name.getText().length() < 1 || tf_description.getText().length() < 1 || c_category.getValue() == null
-				|| (tf_duration_h.getText().length() < 1 || tf_duration_min.getText().length() < 1)) {
+				|| (tf_duration_h.getText().length() < 1 && tf_duration_min.getText().length() < 1)) {
 			Alert empty = new Alert(AlertType.WARNING);
 			empty.setTitle("Incomplete questionaire");
 			empty.setHeaderText("Incomplete questionnaire");
 			empty.setContentText("Please fill all the fields");
 			empty.showAndWait();
-			System.out.println(d_date.getValue());
+			//System.out.println(d_date.getValue()); TEST
 		} else {
 			DBConnector db = new DBConnector();
 			Connection conn = db.connInit();
@@ -94,18 +97,24 @@ public class UserCtAddController11 {
 				ps.setString(2, tf_name.getText());
 				ps.setString(3, tf_description.getText());
 				ps.setString(4, c_category.getValue());
-				ps.setString(5, d_date.getValue().toString()); // DODAÆ OPCJÊ IF ELSE Z AUTOMATYCNYM DOPISYWANIEM DZISIEJSZEJ DATY
+				ps.setString(5, d_date.getValue().toString()); 
 				ps.setInt(6, duration);
 				ps.executeUpdate();
 				clearAction(null);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
+			Alert empty = new Alert(AlertType.INFORMATION);
+			empty.setTitle("Addition successful");
+			empty.setHeaderText("Congratulaions on completing this task!");
+			empty.setContentText("Task has been added successfully");
+			empty.showAndWait();			
 		}
 	}
-
 	public void initialize() {
 		c_category.setItems(categories);
+		LocalDate today = LocalDate.now();
+		d_date.setValue(today);
 	}
 
 }

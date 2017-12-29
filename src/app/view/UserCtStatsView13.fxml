@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" styleClass="body" stylesheets="@app.view.materials/style.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controller.UserCtStatsController13">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" styleClass="body" stylesheets="@app.view.materials/tableStyle.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controller.UserCtStatsController13">
    <children>
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="291.0" layoutY="28.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="You are displaying tasks statistics" textFill="WHITE">
          <font>
@@ -28,10 +28,11 @@
             <TableColumn id="tableheader" fx:id="t_time_end" prefWidth="98.0" text="END TIME" />
         </columns>
       </TableView>
-      <Button fx:id="btn_refresh" layoutX="885.0" layoutY="115.0" mnemonicParsing="false" onMouseClicked="#refreshAction" prefHeight="77.0" prefWidth="99.0" text="Refresh" />
-      <Button fx:id="btn_bycategory" layoutX="885.0" layoutY="205.0" mnemonicParsing="false" onMouseClicked="#byCategoryAction" prefHeight="77.0" prefWidth="99.0" text="Grouped" />
+      <Button fx:id="btn_filter_dates" layoutX="885.0" layoutY="113.0" mnemonicParsing="false" onMouseClicked="#filterDatesAction" prefHeight="77.0" prefWidth="99.0" text="Filter dates" />
+      <Button fx:id="btn_bycategory" layoutX="885.0" layoutY="205.0" mnemonicParsing="false" onMouseClicked="#byCategoryAction" prefHeight="77.0" prefWidth="99.0" text="Group" />
+      <Button fx:id="btn_reset" layoutX="884.0" layoutY="299.0" mnemonicParsing="false" onMouseClicked="#resetAction" prefHeight="77.0" prefWidth="99.0" text="Reset" />
       <Button fx:id="btn_return" layoutX="884.0" layoutY="544.0" mnemonicParsing="false" onMouseClicked="#gobackAction" prefHeight="77.0" prefWidth="99.0" text="Go back" />
-      <ImageView fitHeight="100.0" fitWidth="102.0" layoutX="900.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="100.0" fitWidth="102.0" layoutX="29.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@app.view.materials/icons8-life-cycle-50.png" />
          </image>

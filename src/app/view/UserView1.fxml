@@ -67,7 +67,7 @@
             <Button maxHeight="1.7976931348623157E308" mnemonicParsing="false" prefHeight="76.0" prefWidth="156.0" text="Show statistics" textFill="WHITE" />
          </children>
       </HBox>
-      <ImageView fitHeight="100.0" fitWidth="102.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
+      <ImageView fitHeight="100.0" fitWidth="102.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
          <image>
             <Image url="@app.view.materials/icons8-life-cycle-50.png" />
          </image>

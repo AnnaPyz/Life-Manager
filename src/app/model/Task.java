@@ -37,6 +37,10 @@ public class Task {
 		this.time_start = time_start;
 		this.time_end = time_end;
 	}
+	public Task(String category, int duration) {
+		this.category = category;
+		this.duration = duration;
+	}
 	public int getId() {
 		return id;
 	}

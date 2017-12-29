@@ -50,9 +50,9 @@
       <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Duration" GridPane.columnIndex="1" GridPane.rowIndex="7" />
       <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="7">
          <children>
-            <TextField fx:id="tf_duration_h" maxHeight="1.7976931348623157E308" prefHeight="65.0" prefWidth="134.0" />
+            <TextField fx:id="tf_duration_h" alignment="CENTER" maxHeight="-Infinity" prefHeight="65.0" prefWidth="134.0" />
             <Label alignment="CENTER" maxHeight="1.7976931348623157E308" prefHeight="65.0" prefWidth="82.0" text="h     " />
-            <TextField fx:id="tf_duration_min" maxHeight="1.7976931348623157E308" prefHeight="65.0" prefWidth="134.0" />
+            <TextField fx:id="tf_duration_min" alignment="CENTER" maxHeight="1.7976931348623157E308" prefHeight="65.0" prefWidth="134.0" />
             <Label alignment="CENTER" maxHeight="1.7976931348623157E308" prefHeight="65.0" prefWidth="82.0" text="min" />
          </children>
       </HBox>
@@ -62,7 +62,7 @@
          </children></HBox>
       <Button fx:id="btn_clear" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#clearAction" prefHeight="69.0" prefWidth="99.0" text="Clear" GridPane.columnIndex="1" GridPane.rowIndex="9" />
       <Button fx:id="btn_return" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#gobackAction" prefHeight="69.0" prefWidth="100.0" text="Go back" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="9" />
-      <ImageView fitHeight="100.0" fitWidth="102.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.valignment="BASELINE">
+      <ImageView fitHeight="100.0" fitWidth="102.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
          <image>
             <Image url="@app.view.materials/icons8-life-cycle-50.png" />
          </image>
