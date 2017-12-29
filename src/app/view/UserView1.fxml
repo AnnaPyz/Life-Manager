@@ -63,8 +63,8 @@
       <HBox prefHeight="62.0" prefWidth="480.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
          <children>
             <Label prefHeight="21.0" prefWidth="89.0" />
-            <Button maxHeight="1.7976931348623157E308" mnemonicParsing="false" prefHeight="76.0" prefWidth="157.0" text="Add new" textFill="WHITE" />
-            <Button maxHeight="1.7976931348623157E308" mnemonicParsing="false" prefHeight="76.0" prefWidth="156.0" text="Show statistics" textFill="WHITE" />
+            <Button maxHeight="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#ssAddAction" prefHeight="76.0" prefWidth="157.0" text="Add new" textFill="WHITE" />
+            <Button maxHeight="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#ssStatsAction" prefHeight="76.0" prefWidth="156.0" text="Show statistics" textFill="WHITE" />
          </children>
       </HBox>
       <ImageView fitHeight="100.0" fitWidth="102.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER">

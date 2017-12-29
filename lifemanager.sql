@@ -24,6 +24,16 @@ time_start time,
 time_end time
 );
 
+create table successes(
+id int primary key auto_increment,
+user_id int not null,
+name varchar(50) not null,
+description varchar(100),
+category varchar(20) not null,
+date_start date,
+supersuccess bool not null
+);
+
 insert into users (name, surname, login, pass, access) values ('Anna', 'Pyzel', 'pyzel', 'pyzel', '0');
 insert into users (name, surname, login, pass, access) values ('User', 'User', 'u', 'u', '0');
 
@@ -31,3 +41,6 @@ insert into tasks (user_id, name, description, category, date_start, duration) v
 insert into tasks (user_id, name, description, category, date_start, duration) values (1, 'project2', 'project2 descrtasksiption', 'work', curdate() ,100);
 
 insert into tasks (user_id, name, description, category, date_start, duration, time_start, time_end) values (1, 'project', 'project description', 'work', '2017-12-16', 100, curtime(), curtime());
+insert into successes (user_id, name, description, category, date_start, supersuccess) values (1, 'project', 'project description', 'work', '2017-12-16', 1);
+insert into successes (user_id, name, description, category, date_start, supersuccess) values (2, 'project', 'project description', 'work', '2017-12-16', 0);
+insert into successes (user_id, name, description, category, date_start, supersuccess) values (2, 'project', 'project description', 'work', '2017-12-27', 1);

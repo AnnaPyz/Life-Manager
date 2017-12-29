@@ -45,5 +45,15 @@ public class UserController1 {
     	show("UserCtStatsView13.fxml","Show current tasks stats");
     	((Node)(event.getSource())).getScene().getWindow().hide();	
     }
+    @FXML
+    void ssAddAction(MouseEvent event) {
+    	show("UserSsAddView31.fxml","Add new success");
+    	((Node)(event.getSource())).getScene().getWindow().hide();
+    }
 
+    @FXML
+    void ssStatsAction(MouseEvent event) {
+    	show("UserSsStatsView32.fxml","Show success stories");
+    	((Node)(event.getSource())).getScene().getWindow().hide();
+    }
 }

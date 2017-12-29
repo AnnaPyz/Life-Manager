@@ -51,7 +51,6 @@ public class UserCtAddController11 {
 		tf_name.clear();
 		tf_description.clear();
 		c_category.setValue(null);
-		// d_date.c
 		tf_duration_h.clear();
 		tf_duration_min.clear();
 	}
@@ -60,7 +59,6 @@ public class UserCtAddController11 {
 	void gobackAction(MouseEvent event) { 
 		Stage stage = new Stage();
 		Parent parent = null;
-		//System.out.println("111"); TEST
 		try {
 			parent = (Parent) FXMLLoader.load(getClass().getResource("/app/view/UserView1.fxml"));
 			Scene scene = new Scene(parent);
@@ -71,20 +69,17 @@ public class UserCtAddController11 {
 			e.printStackTrace();
 		}
 		((Node)(event.getSource())).getScene().getWindow().hide();
-
-		// System.out.println(d_date.getValue().toString());
 	}
 
 	@FXML
 	void submitAction(MouseEvent event) {
 		if (tf_name.getText().length() < 1 || tf_description.getText().length() < 1 || c_category.getValue() == null
-				|| (tf_duration_h.getText().length() < 1 && tf_duration_min.getText().length() < 1)) {
+				|| tf_duration_h.getText().length() < 1 || tf_duration_min.getText().length() < 1) {
 			Alert empty = new Alert(AlertType.WARNING);
 			empty.setTitle("Incomplete questionaire");
 			empty.setHeaderText("Incomplete questionnaire");
 			empty.setContentText("Please fill all the fields");
 			empty.showAndWait();
-			//System.out.println(d_date.getValue()); TEST
 		} else {
 			DBConnector db = new DBConnector();
 			Connection conn = db.connInit();

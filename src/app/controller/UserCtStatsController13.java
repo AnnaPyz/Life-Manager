@@ -1,6 +1,7 @@
 package app.controller;
 
 import java.io.IOException;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,12 +17,18 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+
+import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
 
 public class UserCtStatsController13 {
 
@@ -44,17 +51,25 @@ public class UserCtStatsController13 {
     @FXML
     private TableColumn<Task, String> t_time_end;
     @FXML
-    private Button btn_filter_dates;
+    private CheckBox cb_dates;
     @FXML
-    private Button btn_bycategory;
+    private DatePicker dp_start;
+    @FXML
+    private DatePicker dp_finish;
+    @FXML
+    private CheckBox cb_group;
+    @FXML
+    private Button btn_apply;
     @FXML
     private Button btn_reset;    
     @FXML
     private Button btn_return;
+    
     public ObservableList<Task> tasks = FXCollections.observableArrayList();
 	PreparedStatement ps;
 	Connection conn;
 	DBConnector db;
+	
     @FXML
     void gobackAction(MouseEvent event) throws IOException {
     	Stage stage = new Stage();
@@ -72,49 +87,42 @@ public class UserCtStatsController13 {
     void resetAction(MouseEvent event) {
     	select();
     }
+
     @FXML
     void filterDatesAction(MouseEvent event) {
-    	Stage stage = new Stage();
-    	Parent parent = null;
-    	try {
-			parent = (Parent)FXMLLoader.load(getClass().getResource("/app/view/UserCtStatsFilterView131.fxml/"));
-		} catch (IOException e) {
-			System.out.println("Error while trying to show next view.");
-		}
-    	Scene scene = new Scene(parent);
-    	stage.setScene(scene);
-    	stage.setTitle("Selecting dates");
-    	stage.show();    		
-// jak zrobiæ by program poczeka³ tu do zamkniêcia okna z wyborem dat ?
-    	//System.out.println(UserCtStatsFilterController131.start_date +", " + UserCtStatsFilterController131.finish_date); //TEST
-    	//select(UserCtStatsFilterController131.start_date, UserCtStatsFilterController131.finish_date);
+    	if(cb_dates.isSelected()){
+        dp_start.setDisable(false);
+    	dp_finish.setDisable(false);
+    	dp_finish.setValue(LocalDate.now());
+    	dp_start.setValue(dp_finish.getValue().minusDays(7));		
+    	} else {
+            dp_start.setDisable(true);
+        	dp_finish.setDisable(true);
+    	}
     }
-    void filterDates(String date1, String date2){
-    	select(date1, date2);
-    }
+//    @FXML
+//    void groupAction(MouseEvent event) {
+//
+//    }
+    String start_date;
+    String finish_date;
     
     @FXML
-    void byCategoryAction(MouseEvent event) {
-    	connection();
-    	tasks.clear();
-    	t.setItems(tasks); 	
-    	try {
-    		ps = conn.prepareStatement("SELECT category, sum(duration) FROM tasks WHERE user_id = ? AND date_start >= '?' AND date_start <= '?' GROUP BY category");
-    		ps.setInt(1, LoginController.user_id);
-    		ps.setString(2, UserCtStatsFilterController131.start_date);
-    		ps.setString(3, UserCtStatsFilterController131.finish_date);
-    		ResultSet rs = ps.executeQuery();
-    		
-    		while(rs.next()){
-    			tasks.add(new Task(rs.getString("category"), rs.getInt("duration")));
+    void applyAction(MouseEvent event) {
+    	if(cb_dates.isSelected()){
+    		start_date = dp_start.getValue().toString();
+    		finish_date = dp_finish.getValue().toString();
+    		if(cb_group.isSelected()){
+    			selectGrouped(start_date, finish_date);
+    			// odnoœnik do kolejnego widoku
+    		} else {
+    			select(start_date, finish_date);
     		}
-    	    t_category.setCellValueFactory(new PropertyValueFactory<Task, String>("category"));
-    	    t_duration.setCellValueFactory(new PropertyValueFactory<Task, Integer>("duration"));
-    		t.setItems(null);
-    		t.setItems(tasks);   		
-    	} catch (SQLException e){
-    		e.printStackTrace();
-    	}    	    	
+    	} else if(cb_group.isSelected()){
+			selectGrouped();
+    	} else {
+    		select();
+    	}
     }
     
 	private void connection() {
@@ -177,6 +185,63 @@ public class UserCtStatsController13 {
     		e.printStackTrace();
     	}    	
     }
+
+    private void selectGrouped(String date1, String date2) {
+    	connection();
+    	tasks.clear();
+    	t.setItems(tasks); 	
+    	try {
+    		ps = conn.prepareStatement("SELECT category, sum(duration) FROM tasks WHERE user_id = ? AND date_start >= ? AND date_start <= ? GROUP BY category");
+    		ps.setInt(1, LoginController.user_id);
+    		ps.setString(2, date1);
+    		ps.setString(3, date2);
+    		ResultSet rs = ps.executeQuery();
+    		
+    		while(rs.next()){
+    			tasks.add(new Task(0, "", "", 
+    					rs.getString("category"), "", rs.getInt("sum(duration)"), "", ""));
+    		}
+    	    t_id.setCellValueFactory(new PropertyValueFactory<Task, Integer>("0"));
+    	    t_name.setCellValueFactory(new PropertyValueFactory<Task, String>(""));
+    	    t_description.setCellValueFactory(new PropertyValueFactory<Task, String>(""));
+    	    t_category.setCellValueFactory(new PropertyValueFactory<Task, String>("category"));
+    	    t_date.setCellValueFactory(new PropertyValueFactory<Task, String>(""));
+    	    t_duration.setCellValueFactory(new PropertyValueFactory<Task, Integer>("duration"));
+    	    t_time_start.setCellValueFactory(new PropertyValueFactory<Task, String>(""));
+    	    t_time_end.setCellValueFactory(new PropertyValueFactory<Task, String>(""));
+    		t.setItems(null);
+    		t.setItems(tasks);   		
+    	} catch (SQLException e){
+    		e.printStackTrace();
+    	}    	    	
+    }
+    private void selectGrouped() {
+    	connection();
+    	tasks.clear();
+    	t.setItems(tasks); 	
+    	try {
+    		ps = conn.prepareStatement("SELECT category, sum(duration) FROM tasks WHERE user_id = ? GROUP BY category");
+    		ps.setInt(1, LoginController.user_id);
+    		ResultSet rs = ps.executeQuery();
+    		
+    		while(rs.next()){
+    			tasks.add(new Task(0, "", "", 
+    					rs.getString("category"), "", rs.getInt("sum(duration)"), "", ""));
+    		}
+    	    t_id.setCellValueFactory(new PropertyValueFactory<Task, Integer>("0"));
+    	    t_name.setCellValueFactory(new PropertyValueFactory<Task, String>(""));
+    	    t_description.setCellValueFactory(new PropertyValueFactory<Task, String>(""));
+    	    t_category.setCellValueFactory(new PropertyValueFactory<Task, String>("category"));
+    	    t_date.setCellValueFactory(new PropertyValueFactory<Task, String>(""));
+    	    t_duration.setCellValueFactory(new PropertyValueFactory<Task, Integer>("duration"));
+    	    t_time_start.setCellValueFactory(new PropertyValueFactory<Task, String>(""));
+    	    t_time_end.setCellValueFactory(new PropertyValueFactory<Task, String>(""));
+    		t.setItems(null);
+    		t.setItems(tasks);   		
+    	} catch (SQLException e){
+    		e.printStackTrace();
+    	}    	    	
+    }   
     
 	public void initialize() {
 		select();
